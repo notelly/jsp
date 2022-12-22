@@ -1,0 +1,117 @@
+아파치 톰캣 설치순서
+
+내 pc
+설정
+고급시스템설정
+환경변수
+새로만들기
+JAVA_HOME >> java jdk-11.0.17 디렉토리 설정
+저장
+Path >> 편집에 jdk-11.0.17 경로 있으면 됨.
+
+server.xml 파일을 notepad에 끌어오면 내용물이 보이는데
+8080을 8081로 변경하기
+
+cmd 실행
+cd /
+cd Dev
+cd apache-tomcat-9.0.70
+cd bin
+dir
+startup.bat
+
+톰캣이라는 서버에 페이지를 만들어서 톰캣서버에 올려주고 배포하는 것
+C:\Dev\apache-tomcat-9.0.70\webapps\ROOT
+이루트를 실행해 주어야하기 때문에 
+비주얼스튜디오에서 webapps 폴더 가지고 오기
+
+사실 startup.bat은 계속 꼈컸을 해줘야하기 때문에 불편하므로
+이클립스에서 제어할 수 있도록 flow해줄꺼임
+
+이클립스 preferences 에 서버로 들어가기
+runtime environmnet >> add >> Apache Tomcat v9.0
+>> 브라우저 설정 >> C:\Dev\apache-tomcat-9.0.70 설정
+
+오른쪽상단에 open perspective 로 변경
+new에 dynamic web project로 새 프로젝트 만들기
+nextnext >> 체크박스 체크하고 finish 하기
+
+자바 버전 바꿔주기
+15이면 폴더 오른쪽 properties로 들어가서 자바버전 바꿔주고 런타임
+체크되어 있는지 확인하기
+
+webapp폴더에
+jsp file생성 해서 index(무조건소문자) 만들고 내용입력하기.
+
+실행시키는 방법 run as >> run on server 실행하고 체크는 하지말고 
+톰켓 9해서 실행하기  엑세스 허용
+
+
+web-inf >> web.xml 에 들어가서 source로 본다음에 index.jsp 빼고
+다른 welcome파일 지우기
+
+서버를 실행시켜야함.
+
+
+java 에서하는 것
+memder 와 memberDAO를 가지고 옴
+addMemberServlet 클래스를 만들고
+eAddMemberServlet extends HttpServlet extend를 시켜준다음
+dopost를 컨+엔터해서 만든다 (오버라이딩 시켜줌.)
+
+super.doPost(req, resp);
+원래 부모가 가진 기능이라 지우고 새로해준다.
+
+@WebServlet("addMemberServlet") //언어테이션
+index에서 <form action = "addMemberServlet" method ="post"> 실행한다고 하면 호출해주는 것
+바뀐 소스를 톰켓이 다 읽어준다.
+
+저장을 눌렀을때 do post가 뜨면 된다.
+
+사용자가 입력한 값을 dp에 넣는 작업을 할꺼임
+
+<form action = "addMemberServlet" method ="post">
+addMemberServlet 이것을 호출할껀데
+자바소스를 호출에 와야하고.  위가 그 방식임.
+
+form 태그 안에 속성들이 있는데
+여기서 name이 매우 중요하다.
+input 태그에 value로 들어온다.
+이걸 받아줘야하는데 
+dopost의 첫번째 매개값에 들어온다
+getParameter라는 걸로 name이라는 속성에가서 id의 값을 가지고 오겠다.
+그러면 value 의 값을 가지고 옴
+
+jdbc 드라이버 설치 잊지말기! ojdbc6_g.jar
+lib 파일 아래 ojdbc6.jar 붙여넣기
+
+
+dopost : insert update delete
+doget :  get 같이 값을 불러오는거
+
+
+뭐가 안되면 Severs에 가서 restart 해주면된다.
+
+
+html은 jsp를 이용해 꾸며주고 값을 가져오는 것은 Servlet 안에서 하도록 한다.
+나누어져야한다.
+
+//값을 넘기고 싶을때 addMemberServlet -> 회원목록을 출력하는 jsp 페이지를 만들어보자.
+//회원등록페이지 -> 회원목록페이지 (Servlet 페이지에서 데이터조회를 하고 처리결과도 같이 했다. 그걸 html로 넘겨서 보게만들었다. 오전에는 자바창에서 html구현까지 다했음)
+//회원등록페이지(데이터조회) -> 회원목록페이지 (jsp페이지) 회원등록페이지의 값을 적절하게 넘기고 데이터건수만큼 목록에 보이게. 포워딩? 오후에 하고 있는 것.
+//등록페이지에서 조회를 하고 목록페이지에서 보이게 첨에는 목록페이지에서 
+
+자바 -> Servlet 자바part를 줄인다.
+
+searchMemberForm.jsp -> getMember(id) -> searchMemberResult.jsp
+
+updateMemberForm.jsp -> updateMemberServ -> updateMemberResult.jsp
+id, pw, addr, phone
+
+submit 하려면 form 태그가 있어야한다.
+값들을 updateServlet 에 넣고 db에 업데이트 처리를 한다.
+처리한 후에 setAttribute 해서 memberInfo를 Attribute에다가 입력받은 정보를 읽어와서 수정된 결과를 (포워딩) 빼내는걸 해보기
+
+
+DAO.getInstance().updateMember~(vo)
+update에서 실행된 리턴값을 getinstance를 통해 가지고 온다.
