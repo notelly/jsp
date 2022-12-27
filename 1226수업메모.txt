@@ -1,0 +1,72 @@
+<%
+	//jsp 와 *.do 를 바로 실행한 것의 차이
+	//여기서 실행하면 msg는 null
+	//controll을 통해 실행하게 되면 정보를 가지고 온다. msg는 list 값이 나열.
+	List<NoticeVO> msg = (List<NoticeVO>) request.getAttribute("noticeList");
+%>
+
+<p>result: <%=msg%></p>
+
+
+<p>${noticeList }</p>
+<!-- 위를 이걸로 대체할수 있다. 이렇게 쓰면 attribute 값을 가지고 올수 있다. -->
+<c:forEach var="vo" items="${noticeList }">
+	<p>${vo.noticeId },${vo.noticeWriter }</p>
+</c:forEach>
+
+
+WEB-INF 하위폴더. 찾을 수 없다. 외부에서 접근이 불가하다.
+control을 통해서만 접근이 가능하도록 만들어 줌. >> .do 컨트롤을 입력해야 접근할 수 있다.
+
+
+Apach tiles
+
+템플릿페이지를 만들어주고
+header
+menu
+footer를 딱히 신경쓰지 않고 만들수 있게 해준다
+body내용만 신경쓰면됨.
+
+web_inf>>tile.xml
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<definition name="myapp.homepage" template="/WEB-INF/layout/template.jsp">
+		<put-attribute name="title" value="Tiles tutorial homepage" />
+		<put-attribute name="sidebar" value="/WEB-INF/layout/sidebar.jsp" />
+		<put-attribute name="top" value="/WEB-INF/layout/top.jsp" />
+		<put-attribute name="body" value="/WEB-INF/layout/content.jsp" />
+	</definition>
+	<definition name="WILDCARD:*/*" extends="myapp.homepage">
+		<put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp"></put-attribute>
+	</definition>
+	
+</tiles-definitions>
+
+web-inf >> layout >>template.jsp
+
+pom.xml
+mvn repository 에서
+standard impl
+standard spec
+standard jstlel
+standard compat
+
+
+webapp이 가장 상위에 위치함.
+
+잠와서 기절할꺼같아요...
+
+&laquo <<
+$raquo >>
+
+<!-- if else 구문 -->
+<c:when></c:when>
+<c:otherwise><c/otherwise>
+
+<p>${pageDTO }</p> 값 확인할때 썼었음.
+
+

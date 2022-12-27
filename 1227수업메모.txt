@@ -1,0 +1,84 @@
+<option value="" selected>test</option>
+
+req.setAttribute("searchvo", svo);
+추가
+-> searchvo가 뭐지?
+svo
+
+
+searchCondition
+3항연산자.
+writer이면 selected라는 옵션을 주고 싶다.
+<option value="writer" ${searchvo.searchCondition == 'writer' ? 'selected' : '' }>작성자</option>
+
+keyword
+<input type="text" name="keyword" value="${searchvo.keyword }">
+한번 검사할때마다. condition과 keyword값이 뿌려지도록 하는 것
+
+
+<a href="noticeList.do?pageNum=${pageDTO.startPage-1 }&searchCondition=${searchvo.searchCondition}&keyword=${searchvo.keyword}">
+이제 페이지 정보에
+condition과 keyword값이 보여짐
+
+
+<form action="updateNotice.do"> 
+	<input type="hidden" name="num" value="${vo.noticeId}">
+<td><input type = "text" name="title" value="${vo.noticeTitle }"></td>
+<td><textarea name="subject" cols=30 rows=5>${vo.noticeSubject }"</textarea></td>
+
+"num" "title" "subject" 값을 "updateNotice.do"로 보내겠다?
+
+수정을 했을 때
+경로 찾아서 적기
+UpdateNotice.java  >> noticeList.jsp
+
+
+
+pageDTO.cri.pageNum
+>>  NoticeList로 가면 pageDTO라는 어트리뷰트에  cri라는 필드가 있고 >> PageDTO에 가면 Criteria cri이 있고
+>> Criteria에 pageNum을 쓰겠다.
+
+<%
+   request.getAttribute("pageDTO");
+   //key1=val1&key2=val2&key3=val3
+%>
+
+==   ${pageDTO}
+
+
+
+forward 방식
+.java
+setAttribute 
+.jsp
+getAttribute
+공유가 가능하다.
+
+redirect 방식
+새로 만들어준다
+공유가 불가능함.
+
+main> addNotice.do >> AddNotice.java >> addNotice.jsp 
+>> 등록 writer, title, submit 값을 받아서 >>insertNotice.do >>insertNotice.java
+>> 받은 값으로 NoticeVO 에 값을 넣고
+
+NoticeService service = new NoticeServiceImpl();
+NoticeServiceImpl() DAO 기능 호출
+service.insertNoitce(vo);
+
+vo를 가지고
+insertNoitce(NoticeVO vo) 메소드에 가서
+Notice DAO가서 insertNotice() 메소드를 실행해서
+spl을 실행하고 //기능을 실행하고 return 값을 가지고
+noticeList.do로 넘어가고
+기존에 있는 페이지를 띄워주기 위해 포워딩이 아니라 리다이렉트를 써준다.
+
+method="post"> <!-- 00은 값을 다 넘겨서 비번이랑 주소에 다뜸 post로 값을 안보이게 만들어준다. -->
+
+<c:if test="${not empty msg}">
+msg라는 값이 있으면 이라는 의미
+empty => x == null
+
+
+
+
