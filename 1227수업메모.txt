@@ -79,6 +79,6 @@ method="post"> <!-- 00은 값을 다 넘겨서 비번이랑 주소에 다뜸 pos
 msg라는 값이 있으면 이라는 의미
 empty => x == null
 
-
+session.invalidate(); //데이터 삭제
 
 
