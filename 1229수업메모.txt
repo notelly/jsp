@@ -1,0 +1,6 @@
+set.Attribute("memberList", list);
+memberList 속성에 list값을 넣는다.
+
+meberList = "list"
+attribute     value
+
