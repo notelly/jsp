@@ -1,0 +1,13 @@
+insert all
+into center_info (id, center_name)
+Values()
+into center_info (id, center_name)
+Values()
+into center_info (id, center_name)
+Values()
+select * from dual; 
+이렇게 하면 안에 내용물이 반복해서 들어감
+
+Map 데이터 한건을 가지고 오는데 키 밸류 형태로 가지고 온다
+밸류가 숫자가 될 수도 있고 글자가 될 수도 있기 때문에 Object를 쓴다.
+List<Map<String, Object>> => resultType="java.util.Map"
